@@ -4,7 +4,10 @@ let loadRandomButton = document.querySelector('#loadRandomButton');
 console.log(loadRandomButton);
 let list = document.querySelector('#usersList');
 let h1 = document.querySelector('#randomH1');
+let companies = document.querySelector('#companies')
+let loadCompaniesButton= document.querySelector('#loadCompaniesButton')
 console.log(h1);
+
 
 loadButton.addEventListener('click', function(){
   loadUsers();
@@ -13,6 +16,12 @@ loadButton.addEventListener('click', function(){
 loadRandomButton.addEventListener('click', function(){
   loadRandomUser();
 });
+
+loadCompaniesButton.addEventListener('click', function(){
+  loadBusiness()
+})
+
+
 
 async function loadRandomUser(){
   let response = await fetch('https://www.acme-api.com/api/users/random');
@@ -30,5 +39,19 @@ async function loadUsers(){
     li.innerText = user.fullName;
     list.appendChild(li);
   }
+}
+
+async function loadBusiness(){
+  let response = await fetch('https://www.acme-api.com/api/companies')
+  let data = await response.json()
+  let companies = data.name
+  console.log(data)
+  for(let i = 0; i < data.length; i++){
+    let company = data[i];
+    let li = document.createElement('li');
+    li.innerText = company.name;
+    list.appendChild(li);
+  }
+  
 }
 
